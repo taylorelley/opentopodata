@@ -41,6 +41,14 @@ make build
 make run
 ```
 
+Or using Docker Compose:
+
+```bash
+git clone https://github.com/ajnisbet/opentopodata.git
+cd opentopodata
+docker compose up -d
+```
+
 This will start an Open Topo Data server on `http://localhost:5000/`. Some extra steps might be needed for [Windows, M1/Apple Silicon, and Kubernetes](https://www.opentopodata.org/server/).
 
 

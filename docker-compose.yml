@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  opentopodata:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: opentopodata:1.10.2
+    container_name: opentopodata
+    ports:
+      - "5000:5000"
+    volumes:
+      # Mount your elevation data directory (read-only)
+      - ./data:/app/data:ro
+      # Optionally mount a custom config file
+      # - ./config.yaml:/app/config.yaml:ro
+    environment:
+      # GDAL environment variables (already set in Dockerfile)
+      - GDAL_DISABLE_READDIR_ON_OPEN=TRUE
+      - GDAL_NUM_THREADS=ALL_CPUS
+      - GDAL_CACHEMAX=512
+      # Uncomment to override the config file path
+      # - CONFIG_PATH=/app/config.yaml
+      # Uncomment to disable memcache (useful for debugging)
+      # - DISABLE_MEMCACHE=1
+    restart: unless-stopped
+    # Limit resources if needed
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '2'
+    #       memory: 2G
+    #     reservations:
+    #       cpus: '1'
+    #       memory: 512M
